@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>English Premier League</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="/static/assets/img/premierleague-logo-removebg-preview.png" rel="icon">
+    <link href="/static/assets/img/premierleague-logo-removebg-preview.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
+
+    <!-- Vendor CSS Files -->
+    <link href="/static/assets/vendor/bootstrap/css/bootstrap-grid.min.css?v=2" rel="stylesheet" type="text/css">
+    <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css?v=2" rel="stylesheet" type="text/css">
+    <link href="/static/assets/vendor/aos/aos.css?v=2" rel="stylesheet" type="text/css">
+    <link href="/static/assets/vendor/glightbox/css/glightbox.min.css?v=2" rel="stylesheet" type="text/css">
+    <link href="/static/assets/vendor/swiper/swiper-bundle.min.css?v=2" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+
+    <!-- Template Main CSS File -->
+    <link href="/static/assets/css/main.css?v=2" rel="stylesheet" type="text/css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center" style="background-color: #e90052;">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <a href="#" class="logo d-flex align-items-center me-auto me-lg-0">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <img src="/static/assets/img/premierleague-logo-removebg-preview.png" alt="">
+                <h1 style="color: #3d195b;">English Premier League</h1>
+            </a>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a href="#about">Dataset</a></li>
+                    <li><a href="#why-us">Prediksi</a></li>
+                </ul>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="hero d-flex align-items-center">
+        <img src="/static/assets/img/header.webp" alt="" srcset="">
+        <div class="text-container">
+            <h2>Prediksi Klasemen English Premier League</h2>
+            <h3>Birril Cholif Arrohman</h3>
+            <center>
+                <a href="#about"><button class="btn btn-book-a-table">Mulai</button></a>
+            </center>
+        </div>
+    </section><!-- End Hero Section -->
+
+    <main id="main">
+
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header">
+                    <h2>Dataset</h2>
+                    <p>Tambahkan Dataset</p>
+                </div>
+
+                <div class="card">
+                    <div class="position-relative">
+                        <span class="input-dataset">Masukkan Dataset</span>
+
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if "gagal diunggah" in message %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ message }}
+                                        </div>
+                                    {% else %}
+                                        <div class="alert alert-success" role="alert">
+                                            {{ message }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <form action="/" method="post" enctype="multipart/form-data">
+                            <input class="form-control dataset" type="file" name="csv_file" accept=".csv">
+                            <span class="note">Pastikan dataset yang anda gunakan memiliki format .csv</span><br><br>
+                            <button type="submit" class="btn upload-dataset"><i class="bi bi-cloud-arrow-up-fill"></i>
+                                Upload</button>
+                        </form>
+
+                        {% if data_rows %}
+                        <span class="badge dataset-data">Dataset yang digunakan</span>
+                            <div class="table-container">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            {% for header in headers %}
+                                            <th><center>{{ header }}</center></th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in data_rows %}
+                                        <tr>
+                                            {% for cell in row %}
+                                            <td><center>{{ cell }}</center></td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+
+                        {% if akurasi %}
+                            <h3>Tingkat Akurasi</h3>
+                            <h4>{{ akurasi }}%</h4><br>
+                        {% endif %}
+                        {% if classification_report_str %}
+                            <h3>Classification Report</h3>
+                            <pre>{{ classification_report_str }}</pre>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End About Section -->
+
+        <!-- ======= Why Us Section ======= -->
+        <section id="why-us" class="about">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header">
+                    <h2>Prediksi</h2>
+                    <p>Masukkan Data Tim Anda</p>
+                </div>
+
+                <div class="card" style="overflow-wrap: break-word;">
+                    <div class="card-body">
+
+                        <form id="predictionForm" action="/predict" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingTim" name="floatingTim" placeholder="Manchester United">
+                                        <label for="floatingTim">Nama Tim</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="floatingPoint" name="floatingPoint" placeholder="Point Akhir">
+                                        <label for="floatingPoint">Jumlah Point</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="floatingGol" name="floatingGol" placeholder="Jumlah Gol">
+                                        <label for="floatingGol">Jumlah Gol</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="floatingBobol" name="floatingBobol" placeholder="Jumlah Kebobolan">
+                                        <label for="floatingBobol">Jumlah Kebobolan</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="floatingRating" name="floatingRating" placeholder="Rating Tim">
+                                        <label for="floatingRating">Rating Tim</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="floatingPelatih" name="floatingPelatih" aria-label="Kualitas Pelatih">
+                                            <option selected>Pilih Kualitas Pelatih</option>
+                                            <option value="0">Baru Melatih</option>
+                                            <option value="2">Berprestasi</option>
+                                            <option value="1">Berpengalaman</option>
+                                          </select>
+                                        <label for="floatingPelatih">Kualitas Pelatih</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="note">Keterangan :</span><br>
+                            <span class="note">Kualitas pelatih ditentukan oleh berapa gelar yang telah diraih selama menjadi pelatih</span><br>
+                            <span class="note">Baru Melatih : 0 Piala</span><br>
+                            <span class="note">Berprestasi : 1-3 Piala</span><br>
+                            <span class="note">Berpengalaman : Lebih dari 3 Piala</span><br><br>
+                            <button type="submit" class="btn upload-dataset" id="prosesButton">
+                                <img src="/static/assets/img/engineering.png" alt="" srcset="" style="width: 24px;">
+                                Proses
+                            </button>
+                        </form>
+
+                        <!-- Place this element where you want to display the prediction result -->
+                       <div class="prediction_content" id="predictionResult" style="overflow: auto;"></div> 
+
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End Why Us Section -->
+
+    </main><!-- End #main -->
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js?v=2"></script>
+    <script src="/static/assets/vendor/aos/aos.js?v=2"></script>
+    <script src="/static/assets/vendor/glightbox/js/glightbox.min.js?v=2"></script>
+    <script src="/static/assets/vendor/purecounter/purecounter_vanilla.js?v=2"></script>
+    <script src="/static/assets/vendor/swiper/swiper-bundle.min.js?v=2"></script>
+    <script src="/static/assets/vendor/php-email-form/validate.js?v=2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+
+    <!-- Template Main JS File -->
+    <script src="/static/assets/js/main.js?v=2"></script>
+
+    <!-- JavaScript code to handle form submission and display prediction result -->
+<!-- JavaScript code to handle form submission and display prediction result -->
+<script>
+    $(document).ready(function() {
+    function predict(event) {
+        // Prevent the form from submitting normally
+        event.preventDefault();
+
+        const form = document.getElementById('predictionForm');
+        const formData = new FormData(form);
+
+        fetch('/predict', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the prediction result
+            const predictionResult = document.getElementById('predictionResult');
+            predictionResult.innerHTML = `
+            <button class="btn" style="background-color: #e90052; margin: 0; display: inline-block;height: 150px; ">
+                <p style="color: #fff; font-size: 18px; margin: 0;">
+                    Berdasarkan data yang anda masukkan, ${data.nama_tim} dengan ${data.floatingPoint} Point, Jumlah Gol ${data.floatingGol} Gol, Jumlah Kebobolan ${data.floatingBobol} Gol dan Rating Tim ${data.floatingRating} dengan Pelatih yang ${getKualitasPelatih(data.floatingPelatih)} akan bermain di ${data.prediction_result} musim depan.
+                </p>
+            </button>`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Helper function to get kualitas pelatih name based on value
+    function getKualitasPelatih(value) {
+        if (value === '0') return 'Baru Melatih';
+        else if (value === '2') return 'Berprestasi';
+        else if (value === '1') return 'Berpengalaman';
+        else return '';
+    }
+
+    // Attach the predict function to the form submission event
+    document.getElementById('predictionForm').addEventListener('submit', predict);
+});
+</script>
+
+</body>
+
+</html>

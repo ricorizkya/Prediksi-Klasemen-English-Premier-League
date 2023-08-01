@@ -1,0 +1,21 @@
+﻿nama_tim;point_akhir;jumlah_gol;jumlah_masuk;rating_tim;kualitas_pelatih;status
+Arsenal;61;55;39;80;berprestasi;no_europe
+Aston Villa;55;55;46;76;berprestasi;no_europe
+Brighton & Hove Albion;41;40;46;76;berprestasi;no_europe
+Burnley;39;33;55;76;baru_melatih;no_europe
+Chelsea;67;58;36;81;baru_melatih;ucl
+Crystal Palace;44;41;66;77;berpengalaman;no_europe
+Everton;59;47;48;78;berpengalaman;no_europe
+Fulham;28;27;53;73;berprestasi;no_europe
+Leeds United;59;62;54;73;berprestasi;no_europe
+Leicester City;66;68;50;79;berprestasi;uel
+Liverpool;69;68;42;85;berpengalaman;ucl
+Manchester City;86;83;32;85;berpengalaman;ucl
+Manchester United;74;73;44;81;berprestasi;ucl
+Newcastle United;45;46;62;77;berprestasi;no_europe
+Sheffield United;23;20;63;75;berprestasi;degradasi
+Southampton;43;47;68;76;berprestasi;no_europe
+Tottenham Hotspurs;62;68;45;82;berpengalaman;uecl
+West Bromwich Albion;26;35;76;73;berprestasi;degradasi
+West Ham United;65;62;47;78;berprestasi;uel
+Wolverhampton;45;36;52;78;berprestasi;no_europe
