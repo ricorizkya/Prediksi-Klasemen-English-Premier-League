@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>English Premier League</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="/static/assets/img/premierleague-logo-removebg-preview.png" rel="icon">
+    <link href="/static/assets/img/premierleague-logo-removebg-preview.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
+
+    <!-- Vendor CSS Files -->
+    <link href="/static/assets/vendor/bootstrap/css/bootstrap-grid.min.css?v=2" rel="stylesheet" type="text/css">
+    <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css?v=2" rel="stylesheet" type="text/css">
+    <link href="/static/assets/vendor/aos/aos.css?v=2" rel="stylesheet" type="text/css">
+    <link href="/static/assets/vendor/glightbox/css/glightbox.min.css?v=2" rel="stylesheet" type="text/css">
+    <link href="/static/assets/vendor/swiper/swiper-bundle.min.css?v=2" rel="stylesheet" type="text/css">
+    <link href="/static/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+
+
+    <!-- Template Main CSS File -->
+    <link href="/static/assets/css/main.css?v=2" rel="stylesheet" type="text/css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center" style="background-color: #e90052;">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <a href="#" class="logo d-flex align-items-center me-auto me-lg-0">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <img src="/static/assets/img/premierleague-logo-removebg-preview.png" alt="">
+                <h1 style="color: #3d195b;">English Premier League</h1>
+            </a>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a href="#about">Dataset</a></li>
+                    <li><a href="#why-us">Prediksi</a></li>
+                </ul>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="hero d-flex align-items-center">
+        <img src="/static/assets/img/header.webp" alt="" srcset="">
+        <div class="text-container">
+            <h2>Prediksi Pertandingan English Premier League</h2>
+            <h3>Birril Cholif Arrohman</h3>
+            <center>
+                <a href="{{ url_for('index') }}"><button class="btn btn-book-a-table">Klasemen</button></a>
+                <a href="#about"><button class="btn btn-book-a-table">Pertandingan</button></a>
+            </center>
+        </div>
+    </section><!-- End Hero Section -->
+
+    <main id="main">
+
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header">
+                    <h2>Dataset</h2>
+                    <p>Tambahkan Dataset</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                    <div class="position-relative">
+                        <span class="input-dataset">Masukkan Dataset</span>
+
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if "gagal diunggah" in message %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ message }}
+                                        </div>
+                                    {% else %}
+                                        <div class="alert alert-success" role="alert">
+                                            {{ message }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <form action="/prediksi" method="post" enctype="multipart/form-data">
+                            <input class="form-control dataset" type="file" name="csv_file" accept=".csv">
+                            <span class="note">Pastikan dataset yang anda gunakan memiliki format .csv</span><br><br>
+                            <button type="submit" class="btn upload-dataset"><i class="bi bi-cloud-arrow-up-fill"></i>
+                                Upload</button>
+                        </form><br>
+
+                        {% if data_rows %}
+                        <span class="badge dataset-data">Dataset yang digunakan</span>
+                            <div class="table-responsive">
+                                <table class="table table-hover datatable">
+                                    <thead>
+                                        <tr>
+                                            {% for header in headers %}
+                                            <th scope><center>{{ header }}</center></th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in data_rows %}
+                                        <tr>
+                                            {% for cell in row %}
+                                            <td scope><center>{{ cell }}</center></td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                        <br>
+
+                        {% if akurasi %}
+                            <h3>Tingkat Akurasi</h3>
+                            <h4>{{ akurasi }}%</h4><br>
+                        {% endif %}
+                        {% if classification_report_str %}
+                            <h3>Classification Report</h3>
+                            <pre>{{ classification_report_str }}</pre>
+                        {% endif %}
+
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End About Section -->
+
+        <!-- ======= Why Us Section ======= -->
+        <section id="why-us" class="about">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header">
+                    <h2>Prediksi</h2>
+                    <p>Masukkan Data Tim</p>
+                </div>
+
+                <div class="card" style="overflow-wrap: break-word;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h2 style="color: #3d195b;">Tim Home</h2>
+                                <form id="matchPredict" action="/predict-match" method="post" enctype="multipart/form-data">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingTimHome" name="floatingTimHome" placeholder="Manchester United">
+                                        <label for="floatingTimHome">Nama Tim</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="floatingRatingTimHome" name="floatingRatingTimHome" aria-label="Rating Tim Home">
+                                                    <option selected>Pilih Rating Tim</option>
+                                                    <option value="0">Biasa</option>
+                                                    <option value="1">Rata-Rata</option>
+                                                    <option value="2">Bagus</option>
+                                                </select>
+                                                <label for="floatingRatingTimHome">Rating Tim</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="floatingKualitasPelatihHome" name="floatingKualitasPelatihHome" aria-label="Kualitas Pelatih Home">
+                                                    <option selected>Pilih Kualitas Pelatih</option>
+                                                    <option value="0">Baru Melatih</option>
+                                                    <option value="1">Berprestasi</option>
+                                                    <option value="2">Berpengalaman</option>
+                                                </select>
+                                                <label for="floatingKualitasPelatihHome">Kualitas Pelatih</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="floatingMenyerangHome" name="floatingMenyerangHome" aria-label="Strategi Menyerang Home">
+                                                    <option selected>Pilih Strategi Menyerang</option>
+                                                    <option value="0">Counter Attack</option>
+                                                    <option value="1">Long Ball</option>
+                                                    <option value="2">Build Up</option>
+                                                    <option value="3">Tiki-Taka</option>
+                                                </select>
+                                                <label for="floatingMenyerangHome">Strategi Menyerang</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="floatingBertahanHome" name="floatingBertahanHome" aria-label="Strategi Bertahan Home">
+                                                    <option selected>Pilih Strategi Bertahan</option>
+                                                    <option value="0">Low Block</option>
+                                                    <option value="1">Man Marking</option>
+                                                    <option value="2">High Pressing</option>
+                                                    <option value="3">Offside Trap</option>
+                                                </select>
+                                                <label for="floatingBertahanHome">Strategi Bertahan</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col">
+                                <h2 style="color: #3d195b">Tim Away</h2>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingTimAway" name="floatingTimAway" placeholder="Manchester United">
+                                        <label for="floatingTimAway">Nama Tim</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="floatingRatingTimAway" name="floatingRatingTimAway" aria-label="Rating Tim Away">
+                                                    <option selected>Pilih Rating Tim</option>
+                                                    <option value="0">Biasa</option>
+                                                    <option value="1">Rata-Rata</option>
+                                                    <option value="2">Bagus</option>
+                                                </select>
+                                                <label for="floatingRatingTimAway">Rating Tim</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="floatingKualitasPelatihAway" name="floatingKualitasPelatihAway" aria-label="Kualitas Pelatih Away">
+                                                    <option selected>Pilih Kualitas Pelatih</option>
+                                                    <option value="0">Baru Melatih</option>
+                                                    <option value="1">Berprestasi</option>
+                                                    <option value="2">Berpengalaman</option>
+                                                </select>
+                                                <label for="floatingKualitasPelatihAway">Kualitas Pelatih</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="floatingMenyerangAway" name="floatingMenyerangAway" aria-label="Strategi Menyerang Away">
+                                                    <option selected>Pilih Strategi Menyerang</option>
+                                                    <option value="0">Counter Attack</option>
+                                                    <option value="1">Long Ball</option>
+                                                    <option value="2">Build Up</option>
+                                                    <option value="3">Tiki-Taka</option>
+                                                </select>
+                                                <label for="floatingMenyerangAway">Strategi Menyerang</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="floatingBertahanAway" name="floatingBertahanAway" aria-label="Strategi Bertahan Away">
+                                                    <option selected>Pilih Strategi Bertahan</option>
+                                                    <option value="0">Low Block</option>
+                                                    <option value="1">Man Marking</option>
+                                                    <option value="2">High Pressing</option>
+                                                    <option value="3">Offside Trap</option>
+                                                </select>
+                                                <label for="floatingBertahanAway">Strategi Bertahan</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <button type="submit" class="btn upload-dataset" id="prosesButton">
+                                <img src="/static/assets/img/engineering.png" alt="" srcset="" style="width: 24px;">
+                                Proses
+                            </button>
+                        </form>
+                        </div>
+                        <!-- Place this element where you want to display the prediction result -->
+                       <!-- <div class="prediction_content" id="predictionResult" style="overflow: auto;"></div>  -->
+                       <div class="prediction_content" id="predictionResult" style="overflow: auto;"></div> 
+                    </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End Why Us Section -->
+
+    </main><!-- End #main -->
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js?v=2"></script>
+    <script src="/static/assets/vendor/aos/aos.js?v=2"></script>
+    <script src="/static/assets/vendor/glightbox/js/glightbox.min.js?v=2"></script>
+    <script src="/static/assets/vendor/purecounter/purecounter_vanilla.js?v=2"></script>
+    <script src="/static/assets/vendor/swiper/swiper-bundle.min.js?v=2"></script>
+    <script src="/static/assets/vendor/php-email-form/validate.js?v=2"></script>
+    <script src="/static/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    
+
+    <!-- Template Main JS File -->
+    <script src="/static/assets/js/main.js?v=2"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.datatable').DataTable({
+            "paging": true,
+            "pageLength": 10,  // Jumlah data per halaman
+            "lengthChange": true,  // Tidak menampilkan opsi ganti jumlah data per halaman
+            "searching": true,  // Tidak menampilkan fitur pencarian
+            "info": true,  // Menampilkan informasi jumlah data
+            "ordering": true,  // Mengizinkan pengurutan
+            "autoWidth": true,  // Menyesuaikan lebar tabel dengan container
+            "responsive": true,  // Responsif untuk tampilan di perangkat mobile
+            "language": {
+                "paginate": {
+                    "previous": "Sebelumnya",
+                    "next": "Selanjutnya"
+                }
+            }
+        });
+
+        function predict(event) {
+            // Prevent the form from submitting normally
+            event.preventDefault();
+
+            const form = document.getElementById('matchPredict');
+            const formData = new FormData(form);
+
+            fetch('/predict-match', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                let resultText = `Berdasarkan data yang anda masukkan, Tim ${data.nama_tim_home} dengan rating tim ${data.rating_tim_home}, kualitas pelatih ${data.kualitas_pelatih_home} dengan strategi menyerang ${data.menyerang_home} dan strategi bertahan ${data.bertahan_home} akan <b>${data.prediction_result}</b> melawan Tim ${data.nama_tim_away} dengan rating tim ${data.rating_tim_away}, kualitas pelatih ${data.kualitas_pelatih_away} dengan strategi menyerang ${data.menyerang_away} dan strategi bertahan ${data.bertahan_away}`;
+
+                const predictionResult = document.getElementById('predictionResult');
+                predictionResult.innerHTML = `
+                <button class="btn" style="background-color: #e90052; margin: 0; display: inline-block;height: 150px; ">
+                    <p style="color: #fff; font-size: 18px; margin: 0;">
+                        ${resultText}
+                    </p>
+                </button>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Attach the predict function to the form submission event
+        document.getElementById('matchPredict').addEventListener('submit', predict);
+    });
+</script>
+
+</body>
+
+</html>

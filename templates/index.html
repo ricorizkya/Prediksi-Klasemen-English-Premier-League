@@ -64,10 +64,11 @@
     <section id="hero" class="hero d-flex align-items-center">
         <img src="/static/assets/img/header.webp" alt="" srcset="">
         <div class="text-container">
-            <h2>Prediksi Klasemen English Premier League</h2>
+            <h2>Prediksi Klasemen dan Pertandingan English Premier League</h2>
             <h3>Birril Cholif Arrohman</h3>
             <center>
-                <a href="#about"><button class="btn btn-book-a-table">Mulai</button></a>
+                <a href="#about"><button class="btn btn-book-a-table">Klasemen</button></a>
+                <a href="{{ url_for('prediksi') }}"><button class="btn btn-book-a-table">Pertandingan</button></a>
             </center>
         </div>
     </section><!-- End Hero Section -->
@@ -264,12 +265,23 @@
         })
         .then(response => response.json())
         .then(data => {
-            // Update the prediction result
+            let resultText = `Berdasarkan data yang anda masukkan, ${data.nama_tim} dengan ${data.floatingPoint} Point, Jumlah Gol ${data.floatingGol} Gol, Jumlah Kebobolan ${data.floatingBobol} Gol dan Rating Tim ${data.floatingRating} dengan Pelatih yang ${getKualitasPelatih(data.floatingPelatih)} akan bermain di ${data.prediction_result} musim depan.`;
+
+            if (data.prediction_result === "Liga Champions (UCL)") {
+                resultText += " dan berpeluang menjadi juara English Premier League";
+            } else if (data.prediction_result === "Liga Conference (UECL)" || data.prediction_result === "Liga Eropa (UEL)") {
+                resultText += " dan tidak akan menjadi juara English Premier League";
+            } else if (data.prediction_result === "Tidak Bermain di Turnamen Eropa") {
+                resultText += " dan tidak akan menjadi juara English Premier League";
+            } else if (data.prediction_result === "Degradasi") {
+                resultText += " akan terdegradasi ke kasta liga kedua Liga Inggris";
+            }
+
             const predictionResult = document.getElementById('predictionResult');
             predictionResult.innerHTML = `
             <button class="btn" style="background-color: #e90052; margin: 0; display: inline-block;height: 150px; ">
                 <p style="color: #fff; font-size: 18px; margin: 0;">
-                    Berdasarkan data yang anda masukkan, ${data.nama_tim} dengan ${data.floatingPoint} Point, Jumlah Gol ${data.floatingGol} Gol, Jumlah Kebobolan ${data.floatingBobol} Gol dan Rating Tim ${data.floatingRating} dengan Pelatih yang ${getKualitasPelatih(data.floatingPelatih)} akan bermain di ${data.prediction_result} musim depan.
+                    ${resultText}
                 </p>
             </button>`;
         })
