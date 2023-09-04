@@ -75,7 +75,7 @@ def predict_and_evaluate1(file_path):
     cls_dataset = dataset['status']
 
     xtrain, xtest, ytrain, ytest = train_test_split(
-        attr_dataset, cls_dataset, test_size=0.9, random_state=1)
+        attr_dataset, cls_dataset, test_size=0.2, random_state=1)
     tree_dataset = DecisionTreeClassifier(random_state=1)
     tree_dataset.fit(xtrain, ytrain)
 
@@ -100,7 +100,7 @@ def predict_and_evaluate_match(file_path):
 
     xtrain, xtest, ytrain, ytest = train_test_split(
         attr_dataset, cls_dataset, test_size=0.2, random_state=1)
-    tree_dataset = DecisionTreeClassifier(random_state=1)
+    tree_dataset = DecisionTreeClassifier(criterion='entropy')
     tree_dataset.fit(xtrain, ytrain)
 
     ypred = tree_dataset.predict(xtest)
